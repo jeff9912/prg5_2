@@ -22,10 +22,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Copy application code
 COPY . .
 
-# Copy your .env file (already exists in your repo)
-# Make sure the path is correct in your repo
-COPY .env .env
-
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
