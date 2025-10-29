@@ -1,37 +1,43 @@
-# Dockerfile for Laravel
-FROM php:8.3-cli
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    git \
-    sqlite3 \
-    && docker-php-ext-install pdo pdo_sqlite mbstring exif pcntl bcmath gd
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Use official PHP 8.3 FPM image with Alpine (small, secure)
+FROM php:8.3-fpm-alpine
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-# Copy project files
+# Install system dependencies
+RUN apk add --no-cache \
+    bash \
+    git \
+    unzip \
+    sqlite \
+    sqlite-dev \
+    libzip-dev \
+    oniguruma-dev \
+    curl \
+    && docker-php-ext-install pdo pdo_sqlite mbstring zip bcmath
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Copy application code
 COPY . .
+
+# Copy your .env file (already exists in your repo)
+# Make sure the path is correct in your repo
+COPY .env .env
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Generate app key
-RUN php artisan key:generate
+# Set permissions for storage and cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Run migrations
-RUN php artisan migrate --force
+# Make sure SQLite database file exists
+RUN touch /opt/render/project/src/database/database.sqlite \
+    && chmod 666 /opt/render/project/src/database/database.sqlite
 
-# Expose port
+# Expose port (match the port Render assigns)
 EXPOSE 10000
 
-# Start server
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
+# Run migrations and start built-in PHP server
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
