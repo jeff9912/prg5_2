@@ -1,5 +1,31 @@
 <x-layout>
+
+    @if(session('error'))
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="py-3">
+        <form action="{{route('artist.search')}}" method="get" class="mb-4 flex gap-2">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Search artist..."
+                class="w-full px-4 py-2 border rounded-md focus:ring focus:ring-indigo-200 flex"
+            >
+            <button
+                type="submit"
+                class="px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            >
+                Search
+            </button>
+        </form>
+    </div>
+
     <h1 class="font-bold py-3 text-2xl">Mijn favorite Artists</h1>
+
 
     <div class="py-4">
         @foreach(['Rock', 'Metal', 'Pop', 'Jazz', 'Classical', 'Alternative', 'Hip-Hop'] as $genre)

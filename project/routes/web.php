@@ -12,7 +12,7 @@ Route::get('/', [ArtistController::class, 'home'])->name('home');
 
 //filter route, met filter functie
 Route::get('/artist/filter', [ArtistController::class, 'filter'])->name('artist.filter');
-
+Route::get('/search', [ArtistController::class, 'search'])->name('artist.search');
 Route::get('/artist/{id}', [ArtistController::class, 'show'])->name('artist.show');
 Route::get('/create', [ArtistController::class, 'create'])->name('artist.create');
 Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');

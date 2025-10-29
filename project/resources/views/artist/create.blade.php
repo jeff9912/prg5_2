@@ -36,7 +36,6 @@
                     <option value="Metal" {{ old('genre') == 'Metal' ? 'selected' : '' }}>Metal</option>
                     <option value="Jazz" {{ old('genre') == 'Jazz' ? 'selected' : '' }}>Jazz</option>
                     <option value="Hip-Hop" {{ old('genre') == 'Hip-Hop' ? 'selected' : '' }}>Hip-Hop</option>
-                    <!-- Add any other genres you want -->
                 </select>
                 <x-input-error :messages="$errors->get('genre')" class="mt-2 text-sm text-red-600"/>
             </div>
