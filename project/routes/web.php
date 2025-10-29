@@ -10,12 +10,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArtistController::class, 'home'])->name('home');
 
-Route::get('/artist/{id}', [ArtistController::class, 'show'])->name('artist.show');
+//filter route, met filter functie
+Route::get('/artist/filter', [ArtistController::class, 'filter'])->name('artist.filter');
 
+Route::get('/artist/{id}', [ArtistController::class, 'show'])->name('artist.show');
 Route::get('/create', [ArtistController::class, 'create'])->name('artist.create');
 Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');
 
+
+//form voor hidden
+Route::patch('/artist/{artist}/toggle-hidden', [ArtistController::class, 'toggleHidden'])->name('artist.toggleHidden');
+//form voor delete
+Route::delete('/artist/{artist}', [ArtistController::class, 'destroy'])->name('artist.destroy');
+//filter by genre (doesnt work yet)
+//edit entries
+Route::get('/artist/{artist}/edit', [ArtistController::class, 'edit'])->name('artist.edit');
+//update edited entries
+Route::put('/artist/{artist}', [ArtistController::class, 'update'])->name('artist.update');
+
 Route::resource('albums', AlbumController::class);
+Route::get('/album', [ArtistController::class, 'album'])->name('albums');
 Route::post('/albums', [AlbumController::class, 'store'])->name('albums.store');
 
 Route::get('/about-us', function () {
@@ -25,8 +39,6 @@ Route::get('/about-us', function () {
     ]);
 })->name('about');
 
-Route::get('/album', [ArtistController::class, 'album'])->name('albums');
-
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -35,7 +47,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::delete('/artist/{artist}', [ArtistController::class, 'destroy'])->name('artist.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

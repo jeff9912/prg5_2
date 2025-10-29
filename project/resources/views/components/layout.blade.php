@@ -66,7 +66,7 @@
 
 <!-- Footer -->
 <footer class="bg-white border-t text-center py-4 text-sm text-gray-500">
-    © {{ date('Y') }} Jeff's site. All rights reserved.
+    © {{ date('Y') }} Jeff's site.
 </footer>
 
 </body>
