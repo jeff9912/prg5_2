@@ -73,6 +73,18 @@ ik heb aanpassingen gemaakt aan de create functionateit en validatie van albums 
 ik heb de laatste dingen laten werken in mijn project, zo heb ik nu bijvoorbeeld een zoekfunctie en diepere validatie.
 
 
+
+30/10:
+
+project is af, ik heb het werkend kunnen krijgen op een hosting
+
+
+
+
+
+
+
+
 MoSCoW priotizering:
 
 
